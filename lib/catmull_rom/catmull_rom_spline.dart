@@ -1,24 +1,5 @@
 import 'dart:math' as Math;
-
-class Point2D {
-  double x;
-  double y;
-
-  Point2D(double x, double y) {
-    this.x = x;
-    this.y = y;
-  }
-
-  void setLocation(double x, double y) {
-    this.x = x;
-    this.y = y;
-  }
-
-  void copyLocation(Point2D point) {
-    this.x = point.x;
-    this.y = point.y;
-  }
-}
+import 'point2d.dart';
 
 class CatmullRomSpline {
   CatmullRomSpline.create(
@@ -162,16 +143,19 @@ class CatmullRomSpline {
       double dy01 = (p1.y - p0.y);
       double d01 = ((dx01 * dx01) + (dy01 * dy01));
       t1 = (t0 + Math.pow(d01, exponent));
+
       double dx12 = (p2.x - p1.x);
       double dy12 = (p2.y - p1.y);
       double d12 = ((dx12 * dx12) + (dy12 * dy12));
       t2 = (t1 + Math.pow(d12, exponent));
+
       double dx23 = (p3.x - p2.x);
       double dy23 = (p3.y - p2.y);
       double d23 = ((dx23 * dx23) + (dy23 * dy23));
       t3 = (t2 + Math.pow(d23, exponent));
+
     }
-    double invStep = (1 ~/ lastStepInSegment).toDouble();
+    double invStep = (1.0 / lastStepInSegment).toDouble();
     for (int i = 0; i < stepsInCurrentSegment; i++) {
       double t = (i * invStep);
       int interpolatedPointIndex = ((index * stepsPerSegment) + i);
@@ -192,9 +176,9 @@ class CatmullRomSpline {
     double y2 = p2.y;
     double x3 = p3.x;
     double y3 = p3.y;
-    double invDt01 = (1 ~/ (t1 - t0)).toDouble();
-    double invDt12 = (1 ~/ (t2 - t1)).toDouble();
-    double invDt23 = (1 ~/ (t3 - t2)).toDouble();
+    double invDt01 = (1 / (t1 - t0)).toDouble();
+    double invDt12 = (1 / (t2 - t1)).toDouble();
+    double invDt23 = (1 / (t3 - t2)).toDouble();
     double f01a = ((t1 - t) * invDt01);
     double f01b = ((t - t0) * invDt01);
     double f12a = ((t2 - t) * invDt12);
@@ -207,8 +191,8 @@ class CatmullRomSpline {
     double y12 = ((f12a * y1) + (f12b * y2));
     double x23 = ((f23a * x2) + (f23b * x3));
     double y23 = ((f23a * y2) + (f23b * y3));
-    double invDt02 = (1 ~/ (t2 - t0)).toDouble();
-    double invDt13 = (1 ~/ (t3 - t1)).toDouble();
+    double invDt02 = (1 / (t2 - t0)).toDouble();
+    double invDt13 = (1 / (t3 - t1)).toDouble();
     double f012a = ((t2 - t) * invDt02);
     double f012b = ((t - t0) * invDt02);
     double f123a = ((t3 - t) * invDt13);
